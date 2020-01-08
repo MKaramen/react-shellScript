@@ -29,7 +29,7 @@ while [[ $response != "y" && $response != "Y" ]]
 do
         echo "This script will create files for react component $name. Continue [y/n]?"
         read response
-            if [ $response = "n" ] || [ $response = "N" ] ; 
+            if [[ $response = "n" ]] || [[ $response = "N" ]] ; 
             then
                 tput setaf 1; printf "Exiting now ${NC}\n"
                 exit
