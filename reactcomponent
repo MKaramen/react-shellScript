@@ -14,7 +14,7 @@ if [ -d "${PWD}/src" ]
             read name
             name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}"
         done 
-    tput setaf 2; echo -e "Component will be created with name $name. ${NC}"
+    tput setaf 2; printf "Component will be created with name $name. ${NC}\n"
         
     else 
         tput setaf 1; printf "/src does not exist, check that you are in the right directory. \nExiting now. ${NC}\n" 
@@ -25,24 +25,27 @@ name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}"
 
 if [ -d "${PWD}/src/components" ]
     then
+while [[ $response != "y" && $response != "Y" ]]
+do
         echo "This script will create files for react component $name. Continue [y/n]?"
         read response
             if [ $response = "n" ] || [ $response = "N" ] ; 
-            then 
-                tput setaf 1; echo -e "Exiting now ${NC}"
-            exit
+            then
+                tput setaf 1; printf "Exiting now ${NC}\n"
+                exit
             fi
+done       
     else
         echo "Components directory not found. Create directory + react component $name ? [y/n]"
         read response
-            if [ $response = "n" ] || [ $response = "N" ] ; 
-            then 
-                tput setaf 1; echo -e "Exiting now ${NC}"
-
-            exit
+            if [[ $response = "y" || $response = "Y" ]] ; 
+                then
+                    mkdir ${PWD}/src/components
+                    tput setaf 2; printf "/components folder created ${NC}" 
+                else
+                    tput setaf 1; printf "Exiting now ${NC}\n"
+                    exit
             fi
-        mkdir ${PWD}/src/components
-        tput setaf 2; echo -e "/components folder created ${NC}"
         
 fi
     
@@ -65,7 +68,7 @@ const $name = props => {
 export default $name;
 EOF
         touch ${PWD}/src/components/$name/$name.module.css;
-        tput setaf 2;echo -e "Created directories and files for functional component! ${NC}";;
+        tput setaf 2; printf "Created directories and files for functional component! ${NC}\n";;
 
     2) mkdir ${PWD}/src/components/$name;
         cat << EOF > ${PWD}/src/components/$name/$name.js
@@ -81,7 +84,5 @@ class $name extends Component {
 export default $name;
 EOF
         touch ${PWD}/src/components/$name/$name.module.css;
-        tput setaf 2;echo -e "Created directories and files for class component! ${NC}";;
+        tput setaf 2; printf "Created directories and files for class component! ${NC}\n";;
 esac
-
-
