@@ -1,8 +1,12 @@
 #!/bin/bash
 
+
+# WORKS ON BASH VERSION 4
+
 PWD=$(pwd)
 # check if the user is indeed at root of react project
 name=$1
+name=${name^}
 
 # defining no-color variable
 NC="\033[0m"
@@ -21,8 +25,6 @@ if [ -d "${PWD}/src" ]
         tput setaf 1; printf "/src does not exist, check that you are in the right directory. \nExiting now. ${NC}\n" 
     exit  
 fi
-
-name=${name^}
 
 if [ -d "${PWD}/src/components" ]
     then 
@@ -59,7 +61,9 @@ case $typeComponent in
 import React from 'react';
 import styles from './$name.module.css';
 
-const $name = props => ();
+const $name = props => {
+    
+};
 
 export default $name;
 EOF
@@ -73,7 +77,7 @@ import styles from './$name.module.css';
 
 class $name extends Component {
     render() {
-        return()
+        return
     }
 };
 
