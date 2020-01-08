@@ -13,6 +13,7 @@ if [ -d "${PWD}/src" ]
         do 
             echo "Choose a name for your component : "
             read name
+            name=${name^}
         done 
     tput setaf 2; echo -e "Component will be created with name $name. ${NC}"
         
@@ -58,13 +59,32 @@ done
 
 case $typeComponent in 
     1) mkdir ${PWD}/src/components/$name;
-        printf "import React from 'react';\nimport styles from './$name.module.css';\n\nconst $name = props => ();\n\nexport default $name"  > ${PWD}/src/components/$name/$name.js;
+        cat << EOF > ${PWD}/src/components/$name/$name.js
+import React from 'react';
+import styles from './$name.module.css';
+
+const $name = props => ();
+
+export default $name;
+EOF
         touch ${PWD}/src/components/$name/$name.module.css;
-        tput setaf 2;echo -e "Created directories and files! ${NC}";;
-    2) mkdir ${PWD}/src/components/$name
-        printf "import React from 'react';\nimport styles from './$name.module.css';\n\nconst $name = props => ();\n\nexport default $name"  > ${PWD}/src/components/$name/$name.js;
+        tput setaf 2;echo -e "Created directories and files for functional component! ${NC}";;
+
+    2) mkdir ${PWD}/src/components/$name;
+        cat << EOF > ${PWD}/src/components/$name/$name.js
+import React, { Component } from 'react';
+import styles from './$name.module.css';
+
+class $name extends Component {
+    render() {
+        return()
+    }
+};
+
+export default $name;
+EOF
         touch ${PWD}/src/components/$name/$name.module.css;
-        tput setaf 2;echo -e "Created directories and files! ${NC}";;
+        tput setaf 2;echo -e "Created directories and files for class component! ${NC}";;
 esac
 
 
