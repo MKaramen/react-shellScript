@@ -1,0 +1,70 @@
+#!/bin/sh
+
+PWD=$(pwd)
+# check if the user is indeed at root of react project
+name=$1
+
+# defining no-color variable
+NC="\033[0m"
+
+if [ -d "${PWD}/src" ] 
+    then 
+        while [[ $name == "" ]]
+        do 
+            echo "Choose a name for your component : "
+            read name
+        done 
+    tput setaf 2; echo -e "Component will be created with name $name. ${NC}"
+        
+    else 
+        tput setaf 1; printf "/src does not exist, check that you are in the right directory. \nExiting now. ${NC}\n" 
+    exit  
+fi
+
+while [[ $name == "" ]]
+do 
+    echo "Choose a name for your component : "
+    read name
+done 
+
+if [ -d "${PWD}/src/components" ]
+    then 
+        echo "This script will create files for react component $name. Continue [y/n]?"
+        read response
+            if [ $response = "n" ] || [ $response = "N" ] ; 
+            then 
+                tput setaf 1; echo -e "Exiting now ${NC}"
+            exit
+            fi
+    else
+        echo "Components directory not found. Create directory + react component $name ? [y/n]"
+        read response
+            if [ $response = "n" ] || [ $response = "N" ] ; 
+            then 
+                tput setaf 1; echo -e "Exiting now ${NC}"
+
+            exit
+            fi
+        mkdir ${PWD}/src/components
+        tput setaf 2; echo -e "/components folder created ${NC}"
+        
+fi
+    
+while [[ $typeComponent != 1 && $typeComponent != 2 ]]
+do 
+    echo "Type [1] for a function component OR Type [2] for a class component?"
+    read typeComponent
+done 
+
+case $typeComponent in 
+    1) mkdir ${PWD}/src/components/$name;
+        printf "import React from 'react';\nimport styles from './$name.module.css';\n\nconst $name = props => ();\n\nexport default $name"  > ${PWD}/src/components/$name/$name.js;
+        touch ${PWD}/src/components/$name/$name.module.css;
+        tput setaf 2;echo -e "Created directories and files! ${NC}";;
+    2) mkdir ${PWD}/src/components/$name
+        printf "import React from 'react';\nimport styles from './$name.module.css';\n\nconst $name = props => ();\n\nexport default $name"  > ${PWD}/src/components/$name/$name.js;
+        touch ${PWD}/src/components/$name/$name.module.css;
+        tput setaf 2;echo -e "Created directories and files! ${NC}";;
+esac
+
+
