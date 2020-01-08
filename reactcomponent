@@ -1,5 +1,4 @@
 #!/bin/sh
-
 PWD=$(pwd)
 # check if the user is indeed at root of react project
 name=$1
@@ -13,7 +12,7 @@ if [ -d "${PWD}/src" ]
         do 
             echo "Choose a name for your component : "
             read name
-            name="${name:0:1}"
+            name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}"
         done 
     tput setaf 2; echo -e "Component will be created with name $name. ${NC}"
         
@@ -22,7 +21,7 @@ if [ -d "${PWD}/src" ]
     exit  
 fi
 
-name="${name^}"
+name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}"
 
 if [ -d "${PWD}/src/components" ]
     then
@@ -59,7 +58,9 @@ case $typeComponent in
 import React from 'react';
 import styles from './$name.module.css';
 
-const $name = props => ();
+const $name = props => {
+    
+};
 
 export default $name;
 EOF
@@ -73,7 +74,7 @@ import styles from './$name.module.css';
 
 class $name extends Component {
     render() {
-        return()
+        return
     }
 };
 
