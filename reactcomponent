@@ -13,7 +13,8 @@ if [ -d "${PWD}/src" ]
             echo "Choose a name for your component : "
             read name
             name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}"
-        done 
+        done
+    name="$(tr '[:lower:]' '[:upper:]' <<< ${name:0:1})${name:1}" 
     tput setaf 2; printf "Component will be created with name $name. ${NC}\n"
         
     else 
